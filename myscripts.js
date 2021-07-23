@@ -10,7 +10,7 @@ document.getElementById("button").addEventListener("click", function () {
   input.trim();
   //push input to recent searches and only keep 5
   recentSearches.push(input);
-  recentSearches.splice(3);
+  recentSearches.splice(1);
   //save recent searches to local storage
   localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
   getWeatherData();
@@ -67,13 +67,15 @@ var getWeatherData = function () {
       displayAreaEl.innerHTML += '<div class="future-weather"></div>';
       var mainWeatherEl = document.querySelector(".main-weather");
       mainWeatherEl.innerHTML +=
-        '<h3><i class="fas fa-thermometer-half"></i> Temp: ' +
-        response.main.temp +
-        "&deg;F</h3>";
+        `<h3><i class="fas fa-thermometer-half"></i> Temp:
+        ${response.main.temp}
+        &deg;F</h3>`;
+
       mainWeatherEl.innerHTML +=
-        '<h3><i class="fas fa-wind"></i> Wind: ' +
-        response.wind.speed +
-        " MPH</h3>";
+        `<h3><i class="fas fa-wind"></i> Wind: 
+        ${response.wind.speed}
+       MPH</h3>`;
+
       mainWeatherEl.innerHTML +=
         '<h3><i class="fas fa-tint"></i> Humidity: ' +
         response.main.humidity +
@@ -97,11 +99,16 @@ var getWeatherData = function () {
         var futureDate = moment.unix(futureDay.dt).format("dddd, MMMM Do");
         var futureItem = document.createElement('div');
         futureItem.setAttribute('class', 'future-item');
-        futureItem.innerHTML = '<h4>'+ futureDate +'</h4>';
-        futureItem.innerHTML += '<h3><i class="fas fa-thermometer-half"></i> Temp: '+ futureDay.temp.day +'&deg;F</h3>';
-        futureItem.innerHTML += '<h3><i class="fas fa-wind"></i> Wind: '+ futureDay.wind_speed +' MPH</h3>';
-        futureItem.innerHTML += '<h3><i class="fas fa-tint"></i> Humidity: '+ futureDay.humidity +'%</h3>';
+        futureItem.innerHTML = `<h4> ${futureDate}</h4>`;
+        futureItem.innerHTML += `<h3><i class="fas fa-thermometer-half"></i> Temp:  ${futureDay.temp.day} &deg;F</h3>`;
+        futureItem.innerHTML += `<h3><i class="fas fa-wind"></i> Wind:  ${futureDay.wind_speed} MPH</h3>`;
+        futureItem.innerHTML += `<h3><i class="fas fa-tint"></i> Humidity: ${futureDay.humidity} %</h3>`;
         futureWeatherEl.appendChild(futureItem);
       }
     });
 };
+
+//current location test
+
+
+navigator.geolocation.getCurrentPosition(success, error);
